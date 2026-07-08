@@ -284,24 +284,25 @@ pixi browse -m root_base
    - High quality research software should be trivial to install and provide platform specific optimized binary builds by default
    - Building from source should be an option for development and debugging, not the default
 * Contributions from .bold[broader HEP ecosystem]: ATLAS, CMS, LHCb, LEGEND, Belle II, SHiP, IRIS-HEP, Scikit-HEP, ROOT Team, DIRAC, CEDAR, theory and pheno community
-   - Initial explorations with Jake Calcutt for DUNE
+   - Initial explorations with .bold[Jake Calcutt] for DUNE
 * .bold[Over 120 HEP packages] added to <br>conda-forge
+   - Most built for `x86_64` .bold[and] ARM-based architectures
 ]
 ]
 .kol-1-2[
 <div class="figure-stack" style="--height: 24em;">
    <figure style="--x: 0; --y: 0; --z: 1; --w: 70%;">
-      <a href="https://github.com/hep-packaging-coordination#analysis">
+      <a href="https://hep-packaging-coordination.github.io/.github/">
          <img src="figures/hep-packaging-coordination-analysis.png">
       </a>
    </figure>
    <figure style="--x: 15%; --y: 18%; --z: 2; --w: 70%;">
-      <a href="https://github.com/hep-packaging-coordination#simulation">
+         <a href="https://hep-packaging-coordination.github.io/.github/">
          <img src="figures/hep-packaging-coordination-simulation.png">
       </a>
    </figure>
    <figure style="--x: 30%; --y: 36%; --z: 3; --w: 70%;">
-      <a href="https://github.com/hep-packaging-coordination#grid">
+         <a href="https://hep-packaging-coordination.github.io/.github/">
          <img src="figures/hep-packaging-coordination-grid.png">
       </a>
    </figure>
@@ -558,6 +559,16 @@ class: end-slide, center
 .large[Backup]
 
 ---
+# References
+
+.huge[
+* [HEP Packaging Coordination](https://hep-packaging-coordination.github.io/.github/)
+* .italic[[Packaging and Distributing the HEP Ecosystem on conda-forge](https://talks.chrisburr.me/2026-06-24-hsf-conda-forge/)], Chris Burr, Matthew Feickert, [June 2026 HSF Seminar](https://indico.cern.ch/event/1692605/contributions/7151271/)
+* .italic[[HEP Packaging Coordination: Distributing the HEP software ecosystem on conda-forge](https://matthewfeickert-talks.github.io/talk-chep-2026/)], Matthew Feickert, [CHEP 2026](https://indico.cern.ch/event/1471803/contributions/6966833/)
+* .italic[[Conda, Pixi and RattlerFS](https://talks.chrisburr.me/2026-06-22-pixi-and-rattlerfs/)], Chris Burr, June 2026 LHCb Week
+]
+
+---
 # How do you create a conda package?
 
 .huge[
@@ -617,6 +628,103 @@ Containerization .bold[should be trivial install of existing locked environment]
    </a>
 </p>
 </div>
+]
+
+---
+# What does typical end-user use look like?
+
+.huge[Creating .bold[projects] defined through a .bold[workspace] for .bold[scripted or interactive] work]
+
+.center[
+<pre class="file-tree">
+$ cd /tmp
+$ pixi init example && cd example  # create workspace
+$ pixi add contur  # declaratively add tools
+✔ Added contur >=3.1.4,<4
+$ pixi run contur ...  # execute commands or tasks
+$ pixi list rivet  # inspect environments
+Name   Version  Build                 Size  Kind   Source
+rivet  4.1.3    py314h9404863_2  53.69 MiB  conda  https://conda.anaconda.org/conda-forge
+$ pixi shell  # drop into interactive subshells
+
+(debug) $ command -v contur
+/tmp/example/.pixi/envs/default/bin/contur
+</pre>
+]
+
+---
+# pixi global
+
+.large[
+* Install CLI tools that are always available, each in its own isolated environment
+* Only the exposed executables land on your `PATH` &mdash; no dependency clashes between tools
+   - Can have a `pyroot640` and `pyroot642` installed at the same time, for example
+]
+
+
+.center[
+<pre class="file-tree">
+$ pixi global install root --with ipython
+└── root (installed)
+    ├─ dependencies: root 6.40.2, ipython 9.15.0
+    └─ exposes: root
+$ pixi global expose add --environment root pyroot=ipython
+Exposed executable pyroot from environment root.
+$ command -v pyroot
+/home/feickert/.pixi/bin/pyroot
+$ pyroot
+Python 3.14.6 | packaged by conda-forge | (main, Jun 12 2026, 08:51:42) [GCC 14.3.0]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 9.15.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: import ROOT
+In [2]: h1 = ROOT.TH1F("hist1", "example", 10, 0, 10)
+</pre>
+]
+
+
+---
+# pixi exec
+
+.large[
+* Run a command and install it in an isolated temporary environment
+   - Environment is cached but .bold[not installed]
+* Pixi fetches what's needed, runs it, then it's gone. Great for one-offs and CI
+]
+
+
+.center[
+<pre class="file-tree">
+$ docker run --rm -ti ghcr.io/prefix-dev/pixi:latest
+# time pixi exec root -l -b -q -e '1+1'  # cold cache
+(int) 2
+
+real	0m27.192s
+user	0m22.731s
+sys	0m14.317s
+# time pixi exec root -l -b -q -e '1+1'  # warm cache
+(int) 2
+
+real	0m0.117s
+user	0m0.061s
+sys	0m0.062s
+# command -v root  # not installed
+</pre>
+]
+
+---
+# Multiple conda channels
+
+.larger[
+* Multiple conda channels can be used together
+* Most significant ones use conda-forge as a base
+   - [Bioconda](https://bioconda.github.io/) for bioinformatics software (also [Snakemake](https://snakemake.readthedocs.io/)!)
+   - [RoboStack](https://robostack.github.io/) for robotics software
+   - [Emscripten Forge](https://emscripten-forge.org/) for the `emscripten-wasm32` platform
+* .bold[Recommendation]: For HEP work within conda-forge instead of custom channels
+   - Large benefit from the shared infrastructure and globally coherent builds (global pinning)
+   - Avoids overlap with multi-purpose software (ROOT, Geant4, ...)
+   - No concern with overly niche tooling being on conda-forge (this is welcomed by conda-forge/core)
 ]
 
 ---
