@@ -3,13 +3,12 @@ count: false
 
 # HEP Packaging Coordination:<br>Distributing the HEP software ecosystem<br>on conda-forge
 
-.huge.blue[Matthew Feickert], .huge[Chris Burr, Lindsey Gray, Giordon Stark]<br>
+.huge.blue[Matthew Feickert], .huge[Chris Burr]<br>
 .huge[(University of Wisconsin&ndash;Madison)]
 
 .large[
-[CHEP 2026](https://indico.cern.ch/event/1471803/contributions/6966833/)<br>
-[Track 6 &ndash; Software environment and maintainability: Ecosystems, Collaboration, and Workflows](https://indico.cern.ch/event/1471803/sessions/624975/#20260525)<br>
-May 27th, 2026
+[DUNE Software Architecture Meeting](https://indico.fnal.gov/event/75177/)<br>
+July 10th, 2026
 ]
 
 <!--
@@ -54,7 +53,7 @@ This process significantly lowers technical barriers across tool development by 
       </a>
    .center[[Chris Burr](https://github.com/chrisburr)
    CERN<br>
-   (LHCb, conda-forge core)]
+   (LHCb, DIRAC,<br>conda-forge core)]
    </figure>
    <figure>
       <a href="https://cms.fnal.gov/lindsey-gray/">
