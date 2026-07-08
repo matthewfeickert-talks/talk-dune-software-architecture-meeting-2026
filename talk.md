@@ -4,7 +4,7 @@ count: false
 # HEP Packaging Coordination:<br>Distributing the HEP software ecosystem<br>on conda-forge
 
 .huge.blue[Matthew Feickert], .huge[Chris Burr]<br>
-.huge[(University of Wisconsin&ndash;Madison)]
+.huge[(University of Wisconsin&ndash;Madison, CERN)]
 
 .large[
 [DUNE Software Architecture Meeting](https://indico.fnal.gov/event/75177/)<br>
