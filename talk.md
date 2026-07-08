@@ -284,24 +284,25 @@ pixi browse -m root_base
    - High quality research software should be trivial to install and provide platform specific optimized binary builds by default
    - Building from source should be an option for development and debugging, not the default
 * Contributions from .bold[broader HEP ecosystem]: ATLAS, CMS, LHCb, LEGEND, Belle II, SHiP, IRIS-HEP, Scikit-HEP, ROOT Team, DIRAC, CEDAR, theory and pheno community
-   - Initial explorations with Jake Calcutt for DUNE
+   - Initial explorations with .bold[Jake Calcutt] for DUNE
 * .bold[Over 120 HEP packages] added to <br>conda-forge
+   - Most built for `x86_64` .bold[and] ARM-based architectures
 ]
 ]
 .kol-1-2[
 <div class="figure-stack" style="--height: 24em;">
    <figure style="--x: 0; --y: 0; --z: 1; --w: 70%;">
-      <a href="https://github.com/hep-packaging-coordination#analysis">
+      <a href="https://hep-packaging-coordination.github.io/.github/">
          <img src="figures/hep-packaging-coordination-analysis.png">
       </a>
    </figure>
    <figure style="--x: 15%; --y: 18%; --z: 2; --w: 70%;">
-      <a href="https://github.com/hep-packaging-coordination#simulation">
+         <a href="https://hep-packaging-coordination.github.io/.github/">
          <img src="figures/hep-packaging-coordination-simulation.png">
       </a>
    </figure>
    <figure style="--x: 30%; --y: 36%; --z: 3; --w: 70%;">
-      <a href="https://github.com/hep-packaging-coordination#grid">
+         <a href="https://hep-packaging-coordination.github.io/.github/">
          <img src="figures/hep-packaging-coordination-grid.png">
       </a>
    </figure>
@@ -709,6 +710,21 @@ user	0m0.061s
 sys	0m0.062s
 # command -v root  # not installed
 </pre>
+]
+
+---
+# Multiple conda channels
+
+.larger[
+* Multiple conda channels can be used together
+* Most significant ones use conda-forge as a base
+   - [Bioconda](https://bioconda.github.io/) for bioinformatics software (also [Snakemake](https://snakemake.readthedocs.io/)!)
+   - [RoboStack](https://robostack.github.io/) for robotics software
+   - [Emscripten Forge](https://emscripten-forge.org/) for the `emscripten-wasm32` platform
+* .bold[Recommendation]: For HEP work within conda-forge instead of custom channels
+   - Large benefit from the shared infrastructure and globally coherent builds (global pinning)
+   - Avoids overlap with multi-purpose software (ROOT, Geant4, ...)
+   - No concern with overly niche tooling being on conda-forge (this is welcomed by conda-forge/core)
 ]
 
 ---
