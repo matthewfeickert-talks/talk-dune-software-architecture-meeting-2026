@@ -651,6 +651,65 @@ $ pixi shell  # drop into interactive subshells
 </pre>
 ]
 
+---
+# pixi global
+
+.large[
+* Install CLI tools that are always available, each in its own isolated environment
+* Only the exposed executables land on your `PATH` &mdash; no dependency clashes between tools
+   - Can have a `pyroot640` and `pyroot642` installed at the same time, for example
+]
+
+
+.center[
+<pre class="file-tree">
+$ pixi global install root --with ipython
+└── root (installed)
+    ├─ dependencies: root 6.40.2, ipython 9.15.0
+    └─ exposes: root
+$ pixi global expose add --environment root pyroot=ipython
+Exposed executable pyroot from environment root.
+$ command -v pyroot
+/home/feickert/.pixi/bin/pyroot
+$ pyroot
+Python 3.14.6 | packaged by conda-forge | (main, Jun 12 2026, 08:51:42) [GCC 14.3.0]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 9.15.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: import ROOT
+In [2]: h1 = ROOT.TH1F("hist1", "example", 10, 0, 10)
+</pre>
+]
+
+
+---
+# pixi exec
+
+.large[
+* Run a command and install it in an isolated temporary environment
+   - Environment is cached but .bold[not installed]
+* Pixi fetches what's needed, runs it, then it's gone. Great for one-offs and CI
+]
+
+
+.center[
+<pre class="file-tree">
+$ docker run --rm -ti ghcr.io/prefix-dev/pixi:latest
+# time pixi exec root -l -b -q -e '1+1'  # cold cache
+(int) 2
+
+real	0m27.192s
+user	0m22.731s
+sys	0m14.317s
+# time pixi exec root -l -b -q -e '1+1'  # warm cache
+(int) 2
+
+real	0m0.117s
+user	0m0.061s
+sys	0m0.062s
+# command -v root  # not installed
+</pre>
+]
 
 ---
 
