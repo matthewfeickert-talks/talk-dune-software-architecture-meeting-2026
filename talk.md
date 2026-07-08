@@ -113,7 +113,7 @@ Pixi is a .bold[fast, modern, and reproducible] software environment management 
 ]
 
 ---
-# Due for a packaging update talk at CHEP
+# You may have heard this years ago
 
 <p style="text-align:center;">
    <a href="https://indico.cern.ch/event/773049/contributions/3473243/">
@@ -122,22 +122,6 @@ Pixi is a .bold[fast, modern, and reproducible] software environment management 
 </p>
 
 .center.large[[Chris Burr, CHEP 2019](https://indico.cern.ch/event/773049/contributions/3473243/)]
-
----
-# Reducing barriers from thought to plot
-
-<p style="text-align:center;">
-   <span class="image-highlight-wrap" style="width: 70%;">
-   <a href="https://indico.cern.ch/event/1471803/contributions/6892513/">
-      <img src="figures/campana-chep-2026-plenary.png" style="width: 100%; display: block;">
-   </a>
-   <span class="image-highlight" style="--top: 30%; --left: 1%; --w: 50%; --h: 25%;"></span>
-   </span>
-.center[[Simone Campana, CHEP 2026](https://indico.cern.ch/event/1471803/contributions/6892513/)]
-</p>
-
-* Simone's plenary highlighted .bold[opportunities] for the software community to .bold[leverage new/better software]
-* Portability, Interoperability, Commonality benefits .bold[apply to software packaging] as well
 
 ---
 # Heterogeneous approach to software distribution
