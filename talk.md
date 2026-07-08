@@ -558,6 +558,16 @@ class: end-slide, center
 .large[Backup]
 
 ---
+# References
+
+.huge[
+* [HEP Packaging Coordination](https://hep-packaging-coordination.github.io/.github/)
+* .italic[[Packaging and Distributing the HEP Ecosystem on conda-forge](https://talks.chrisburr.me/2026-06-24-hsf-conda-forge/)], Chris Burr, Matthew Feickert, [June 2026 HSF Seminar](https://indico.cern.ch/event/1692605/contributions/7151271/)
+* .italic[[HEP Packaging Coordination: Distributing the HEP software ecosystem on conda-forge](https://matthewfeickert-talks.github.io/talk-chep-2026/)], Matthew Feickert, [CHEP 2026](https://indico.cern.ch/event/1471803/contributions/6966833/)
+* .italic[[Conda, Pixi and RattlerFS](https://talks.chrisburr.me/2026-06-22-pixi-and-rattlerfs/)], Chris Burr, June 2026 LHCb Week
+]
+
+---
 # How do you create a conda package?
 
 .huge[
@@ -618,6 +628,29 @@ Containerization .bold[should be trivial install of existing locked environment]
 </p>
 </div>
 ]
+
+---
+# What does typical end-user use look like?
+
+.huge[Creating .bold[projects] defined through a .bold[workspace] for .bold[scripted or interactive] work]
+
+.center[
+<pre class="file-tree">
+$ cd /tmp
+$ pixi init example && cd example  # create workspace
+$ pixi add contur  # declaratively add tools
+✔ Added contur >=3.1.4,<4
+$ pixi run contur ...  # execute commands or tasks
+$ pixi list rivet  # inspect environments
+Name   Version  Build                 Size  Kind   Source
+rivet  4.1.3    py314h9404863_2  53.69 MiB  conda  https://conda.anaconda.org/conda-forge
+$ pixi shell  # drop into interactive subshells
+
+(debug) $ command -v contur
+/tmp/example/.pixi/envs/default/bin/contur
+</pre>
+]
+
 
 ---
 
