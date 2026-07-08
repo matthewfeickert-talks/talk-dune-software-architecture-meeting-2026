@@ -448,8 +448,10 @@ pixi add spheno-atlas  # build variant of spheno
 .center[
 <pre class="file-tree">
 $ pixi init cuda-example && cd cuda-example
-$ pixi workspace system-requirements add cuda 12
-$ time pixi add --platform linux-64 --no-install cuda-compiler geant4 pytorch-gpu
+$ pixi workspace platform add --cuda 12 linux-64-cuda=linux-64
+# Reorder priority from CLI API
+$ pixi workspace platform remove linux-64 && pixi workspace platform add linux-64
+$ time pixi add --platform linux-64-cuda --no-install cuda-compiler geant4 pytorch-gpu
 ...
 real	0m3.097s  # warm repodata cache
 </pre>
