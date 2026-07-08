@@ -22,15 +22,10 @@ This process significantly lowers technical barriers across tool development by 
 <!--
 # Notes
 
-
-* https://indico.cern.ch/event/1471803/contributions/6966833/
-* 18 minutes
-   - 15 talk
-   - 3 questions
-* Each presentation slot is 18 minutes, including up to 15 minutes for the talk, with the remaining time reserved for questions and discussion.
-* Presenters are required to prepare slides in PDF format with a 16:9 aspect ratio. While PowerPoint files may be used, we cannot guarantee full compatibility (e.g., missing fonts or formatting issues).
-* Slides must be uploaded to Indico by the end of the morning plenary session on the day of your presentation.
-* We strongly recommend that presenters bring a backup copy of their slides (e.g., on a laptop or USB drive), in case of any technical issues with Indico (unlikely, it might happen).
+* https://indico.fnal.gov/event/75177/
+* 40 minutes
+   - 25 talk
+   - 15 questions
 -->
 
 ---
