@@ -284,12 +284,12 @@ pixi browse -m root_base
 * What can it do today in terms of support. -->
 
 .kol-1-2[
-.large[
-* [Community project on GitHub](https://github.com/hep-packaging-coordination) to get as much HEP software as possible on conda-forge
+.code-large[
+* [Community project on GitHub](https://hep-packaging-coordination.github.io/.github/) to get as much HEP software as possible on conda-forge
    - High quality research software should be trivial to install and provide platform specific optimized binary builds by default
    - Building from source should be an option for development and debugging, not the default
-* Contributions from .bold[broader HEP ecosystem]: ATLAS, CMS, LHCb, LEGEND, IRIS-HEP, Scikit-HEP, ROOT Team, DIRAC, CEDAR, theory and pheno community
-   - Working with Belle II and SHiP
+* Contributions from .bold[broader HEP ecosystem]: ATLAS, CMS, LHCb, LEGEND, Belle II, SHiP, IRIS-HEP, Scikit-HEP, ROOT Team, DIRAC, CEDAR, theory and pheno community
+   - Initial explorations with Jake Calcutt for DUNE
 * .bold[Over 120 HEP packages] added to <br>conda-forge
 ]
 ]
@@ -394,36 +394,6 @@ pixi run python -c 'import fastjet_cxx as fj'
 ]
 
 ---
-# Case study: Pythonic analysis
-
-.kol-2-3[
-.code-large[
-* conda-forge Python builds currently fastest/optimally-built Python pre-built binaries
-   - conda-forge has optimizations throughout the entire toolchain
-   - [`python-build-standalone`](https://github.com/astral-sh/python-build-standalone) (now maintained by [Astral](https://github.com/astral-sh)) can be [.italic[slightly] faster](https://conda-forge.zulipchat.com/#narrow/channel/457337-general/topic/Performance.20of.20builds.20from.20.60python-feedstock.60.20vs.20upstream/with/504989455) now
-* In most cases, the conda-forge versions of Python packages and Python are .bold[faster than the Python package builds on PyPI]
-   - .italic[Probable] reasons: conda-forge builds have newer compilers, not statically linking and vendoring
-* Benchmarking the IRIS-HEP CMS Analysis Grand Challenge (AGC) has shown .bold[faster analysis throughput with full conda-forge ecosystem environments]
-   - Bigger impact comes from using .bold[newer Python versions]. With conda packaged Python updating is trivial.
-   - Credit: [Peter Fackeldey](https://github.com/pfackeldey), [Iason Krommydas](https://github.com/ikrommyd)
-]
-]
-.kol-1-3[
-<div class="figure-column">
-<p style="text-align:center;">
-   <a href="https://github.com/conda-forge/python-feedstock">
-      <img src="figures/python-logo.svg"; width=100%>
-   </a>
-</p>
-<p style="text-align:center;">
-   <a href="https://iris-hep.org/">
-      <img src="assets/logos/logo_IRIS-HEP.png" style="width:80%">
-   </a>
-</p>
-</div>
-]
-
----
 # Bespoke environments distributed with CVMFS
 
 .code-large[
@@ -445,25 +415,11 @@ $ python -c 'import awkward; print(awkward)'
 <!--  -->
 .code-large[
 * Ongoing work to generalize and broaden support
-   - c.f. [.bold[Chris Burr's plenary talk]](https://indico.cern.ch/event/1471803/contributions/6970826/)! (Thursday 2026-05-28)
+   - c.f. [.bold[Chris Burr's CHEP 2026 plenary]](https://indico.cern.ch/event/1471803/contributions/6970826/)
 ]
 
 ---
 # Practical use cases
-
-.larger[
-* Distributing IRIS-HEP Analysis Systems ecosystem for Analysis Facilities
-]
-
-.center[
-<pre class="file-tree">
-# ssh login.af.uchicago.edu
-$ pixi global install lbcondawrappers
-$ lb-conda experimental/iris-hep  # activates new subshell with locked environment
-$ python -c 'import hist; print(hist)'
-&lt;module 'hist' from '/cvmfs/lhcbdev.cern.ch/conda/envs/experimental/iris-hep/.../hist/__init__.py'&gt;
-</pre>
-]
 
 .larger[
 * [Experiment specific patched](https://github.com/conda-forge/spheno-feedstock/blob/391703127dceeae5399f9ae6429eb4d91e51a027/recipe/recipe.yaml#L20-L23) package variants from same feedstock
@@ -510,6 +466,41 @@ pixi exec --spec rucio-mcp sh -c '$X509_CERT_DIR/refresh_crls.sh'  # only needed
 pixi exec --spec rucio-mcp sh -c 'voms-proxy-init -voms atlas'
 pixi exec --spec rucio-mcp sh -c 'RUCIO_ACCOUNT=&lt;your username&gt; rucio-mcp ping'
 </pre>
+]
+
+---
+# What do I (tool developer) need to do?
+
+.huge[
+* Can you .bold[write a build script] and .bold[install] your project?
+   - ~90% of the the way to having your software be packaged on conda-forge.<img src="figures/paxton-mascot-flying.svg"; width=7%>
+* Have all your .bold[dependencies on conda-forge] already (bootstrap system)
+   - Might have to talk to your colleagues (or package them yourself)
+* <img src="figures/conda-forge-logo.svg"; width=5%> Have your .bold[source code] exist from a .bold[stable and static official source]
+   - No go🛑: Distributions on website that may disappear without warning / no long term archive
+   <!-- - Not great: Tarballs on a distribution website with no long term preservation -->
+   - Good✅: Public version controlled system with release tags / source on package index
+* .bold[Ask for help] from people in HEP Packaging Coordination
+]
+
+---
+# What do I (tool user) need to do?
+
+.center.bold.huge[Very little! ✨]
+
+.huge[
+* Know what your .bold[software requirements] are
+* Know what .bold[computing platforms] you want your analysis to run on
+* Have .bold[Pixi installed] (lives in user space so you can do this yourself anywhere)
+      - Or use the CVMFS distribution
+]
+.center[
+<pre class="file-tree">
+. /cvmfs/cms-griddata.cern.ch/cat/sw/pixi/latest/setup.sh
+</pre>
+]
+.huge[
+* Declaratively describe your environment needs with Pixi
 ]
 
 ---
@@ -570,41 +561,6 @@ class: end-slide, center
 .large[Backup]
 
 ---
-# What do I (tool developer) need to do?
-
-.huge[
-* Can you .bold[write a build script] and .bold[install] your project?
-   - ~90% of the the way to having your software be packaged on conda-forge.<img src="figures/paxton-mascot-flying.svg"; width=7%>
-* Have all your .bold[dependencies on conda-forge] already (bootstrap system)
-   - Might have to talk to your colleagues (or package them yourself)
-* <img src="figures/conda-forge-logo.svg"; width=5%> Have your .bold[source code] exist from a .bold[stable and static official source]
-   - No go🛑: Distributions on website that may disappear without warning / no long term archive
-   <!-- - Not great: Tarballs on a distribution website with no long term preservation -->
-   - Good✅: Public version controlled system with release tags / source on package index
-* .bold[Ask for help] from people in HEP Packaging Coordination
-]
-
----
-# What do I (tool user) need to do?
-
-.center.bold.huge[Very little! ✨]
-
-.huge[
-* Know what your .bold[software requirements] are
-* Know what .bold[computing platforms] you want your analysis to run on
-* Have .bold[Pixi installed] (lives in user space so you can do this yourself anywhere)
-      - Or use the CVMFS distribution
-]
-.center[
-<pre class="file-tree">
-. /cvmfs/cms-griddata.cern.ch/cat/sw/pixi/latest/setup.sh
-</pre>
-]
-.huge[
-* Declaratively describe your environment needs with Pixi
-]
-
----
 # How do you create a conda package?
 
 .huge[
@@ -634,6 +590,36 @@ Linux containers for when you want to:
 
 Containerization .bold[should be trivial install of existing locked environment]
 .center[DOI: [10.25080/nwuf8465](https://doi.org/10.25080/nwuf8465)]
+]
+
+---
+# Case study: Pythonic analysis
+
+.kol-2-3[
+.code-large[
+* conda-forge Python builds currently fastest/optimally-built Python pre-built binaries
+   - conda-forge has optimizations throughout the entire toolchain
+   - [`python-build-standalone`](https://github.com/astral-sh/python-build-standalone) (now maintained by [Astral](https://github.com/astral-sh)) can be [.italic[slightly] faster](https://conda-forge.zulipchat.com/#narrow/channel/457337-general/topic/Performance.20of.20builds.20from.20.60python-feedstock.60.20vs.20upstream/with/504989455) now
+* In most cases, the conda-forge versions of Python packages and Python are .bold[faster than the Python package builds on PyPI]
+   - .italic[Probable] reasons: conda-forge builds have newer compilers, not statically linking and vendoring
+* Benchmarking the IRIS-HEP CMS Analysis Grand Challenge (AGC) has shown .bold[faster analysis throughput with full conda-forge ecosystem environments]
+   - Bigger impact comes from using .bold[newer Python versions]. With conda packaged Python updating is trivial.
+   - Credit: [Peter Fackeldey](https://github.com/pfackeldey), [Iason Krommydas](https://github.com/ikrommyd)
+]
+]
+.kol-1-3[
+<div class="figure-column">
+<p style="text-align:center;">
+   <a href="https://github.com/conda-forge/python-feedstock">
+      <img src="figures/python-logo.svg"; width=100%>
+   </a>
+</p>
+<p style="text-align:center;">
+   <a href="https://iris-hep.org/">
+      <img src="assets/logos/logo_IRIS-HEP.png" style="width:80%">
+   </a>
+</p>
+</div>
 ]
 
 ---
