@@ -559,6 +559,17 @@ Yes and no (or, like all good question, "it depends")
 # (Possible?) DUNE questions / concerns
 
 .large[
+.bold.center[We use Spack for a reason: performance at runtime]
+
+* Does .italic[every] use of your software warrant a .bold[runtime-machine-specific-from-source-build]?
+* Has the performance gain from Spack compared to a platform-specific / [microarchitecture-optimized](https://conda-forge.org/docs/maintainer/knowledge_base/#microarch) package been benchmarked and quantified? How much is being gained?
+* Are you using [Spack binary mirrors](https://spack.io/spack-binary-packages/)? If so, how much of a tradeoff do you have there?
+* Answers might all be "yes"
+]
+---
+# (Possible?) DUNE questions / concerns
+
+.large[
 .bold.center[When would you not use conda-forge?]
 
 A hyper specific software distribution index: Recreating an LCG release for experiment physics stack
