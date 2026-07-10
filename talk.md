@@ -11,6 +11,8 @@ count: false
 July 10th, 2026
 ]
 
+.middle-logo[]
+
 <!--
 # Abstract
 
