@@ -565,7 +565,7 @@ Yes and no (or, like all good question, "it depends")
 
 * Does .italic[every] use of your software warrant a .bold[runtime-machine-specific-from-source-build]?
 * Has the performance gain from Spack compared to a platform-specific / [microarchitecture-optimized](https://conda-forge.org/docs/maintainer/knowledge_base/#microarch) package been benchmarked and quantified? How much is being gained?
-* Are you using [Spack binary mirrors](https://spack.io/spack-binary-packages/)? If so, how much of a tradeoff do you have there?
+* Are you using [Spack binary mirrors](https://cache.spack.io/)? If so, how much of a tradeoff do you have there?
 * Answers might all be "yes"
 ]
 ---
