@@ -35,7 +35,7 @@ This process significantly lowers technical barriers across tool development by 
 
 <br><br>
 
-<div class="figure-row circle">
+<div class="figure-row align-top circle">
    <figure>
       <a href="https://www.matthewfeickert.com/">
          <img src="https://avatars.githubusercontent.com/u/5142394">
