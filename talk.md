@@ -42,7 +42,7 @@ This process significantly lowers technical barriers across tool development by 
       </a>
    .center[[Matthew Feickert](https://www.matthewfeickert.com/)
    UW&ndash;Madison<br>
-   (ATLAS, IRIS-HEP)]
+   (ATLAS, IRIS-HEP,<br>Scikit-HEP)]
    </figure>
    <figure>
       <a href="https://github.com/chrisburr">
@@ -50,7 +50,7 @@ This process significantly lowers technical barriers across tool development by 
       </a>
    .center[[Chris Burr](https://github.com/chrisburr)
    CERN<br>
-   (LHCb, DIRAC,<br>conda-forge core)]
+   (LHCb, DIRAC,<br>conda-forge core,<br>Scikit-HEP)]
    </figure>
    <figure>
       <a href="https://cms.fnal.gov/lindsey-gray/">
@@ -58,7 +58,7 @@ This process significantly lowers technical barriers across tool development by 
       </a>
    .center[[Lindsey Gray](https://cms.fnal.gov/lindsey-gray/)
    Fermilab<br>
-   (CMS)]
+   (CMS, Scikit-HEP)]
    </figure>
    <figure>
       <a href="https://giordonstark.com/">
@@ -66,7 +66,7 @@ This process significantly lowers technical barriers across tool development by 
       </a>
    .center[[Giordon Stark](https://giordonstark.com/)
    UC Santa Cruz<br>
-   (ATLAS, IRIS-HEP)]
+   (ATLAS, IRIS-HEP,<br>Scikit-HEP)]
    </figure>
 </div>
 
