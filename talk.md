@@ -567,7 +567,7 @@ class: end-slide, center
 * [HEP Packaging Coordination](https://hep-packaging-coordination.github.io/.github/)
 * .italic[[Packaging and Distributing the HEP Ecosystem on conda-forge](https://talks.chrisburr.me/2026-06-24-hsf-conda-forge/)], Chris Burr, Matthew Feickert, [June 2026 HSF Seminar](https://indico.cern.ch/event/1692605/contributions/7151271/)
 * .italic[[HEP Packaging Coordination: Distributing the HEP software ecosystem on conda-forge](https://matthewfeickert-talks.github.io/talk-chep-2026/)], Matthew Feickert, [CHEP 2026](https://indico.cern.ch/event/1471803/contributions/6966833/)
-* .italic[[Conda, Pixi and RattlerFS](https://talks.chrisburr.me/2026-06-22-pixi-and-rattlerfs/)], Chris Burr, June 2026 LHCb Week
+* .italic[[Conda, Pixi and RattlerFS](https://talks.chrisburr.me/2026-06-22-pixi-and-rattlerfs/)], Chris Burr, [June 2026 LHCb Week](https://indico.cern.ch/event/1696907/contributions/7143130/)
 ]
 
 ---
