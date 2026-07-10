@@ -539,6 +539,21 @@ wire-cell-toolkit.rev = "61618538be4b6b2241d5be1e9abab6a3e0d4ad97"
 ```
 ]
 
+---
+# (Possible?) DUNE questions / concerns
+
+.large[
+.bold.center[Doesn't having dev source recipes and conda-forge recipes duplicate work?]
+
+Yes and no (or, like all good question, "it depends")
+* `pixi-build`: "Recipes" for building .bold[development] software against .bold[development] software dependencies
+   - Uses minimal config and "build backends" to `rattler-build` recipe internally
+   - Can use a full `rattler-build` recipe if desired
+* conda-forge: `rattler-build` recipes for building .bold[released] software against .bold[released] software dependencies
+* Think less "duplication" and more "defining the motivation and scope of software distribution"
+* Counter to me: conda-forge feedstock maintainer might feel maintenance burden if not a core dev of software being released
+   - Counter-counter: The age of agentic tooling means that you're .bold[reviewing] a recipe change, not creating it
+]
 
 ---
 # (Possible?) DUNE questions / concerns
