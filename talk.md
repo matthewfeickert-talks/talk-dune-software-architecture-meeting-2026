@@ -516,6 +516,13 @@ pixi exec --spec rucio-mcp sh -c 'RUCIO_ACCOUNT=&lt;your username&gt; rucio-mcp 
 ]
 
 ---
+# (Possible?) DUNE questions / concerns
+
+.large[
+.center[From discussions with DUNE members these might be valid existing questions.]
+]
+
+---
 # Summary
 
 .larger[
