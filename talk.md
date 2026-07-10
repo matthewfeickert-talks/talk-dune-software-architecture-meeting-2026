@@ -35,14 +35,14 @@ This process significantly lowers technical barriers across tool development by 
 
 <br><br>
 
-<div class="figure-row circle">
+<div class="figure-row align-top circle">
    <figure>
       <a href="https://www.matthewfeickert.com/">
          <img src="https://avatars.githubusercontent.com/u/5142394">
       </a>
    .center[[Matthew Feickert](https://www.matthewfeickert.com/)
    UW&ndash;Madison<br>
-   (ATLAS, IRIS-HEP)]
+   (ATLAS, IRIS-HEP,<br>Scikit-HEP)]
    </figure>
    <figure>
       <a href="https://github.com/chrisburr">
@@ -50,7 +50,7 @@ This process significantly lowers technical barriers across tool development by 
       </a>
    .center[[Chris Burr](https://github.com/chrisburr)
    CERN<br>
-   (LHCb, DIRAC,<br>conda-forge core)]
+   (LHCb, DIRAC,<br>conda-forge core,<br>Scikit-HEP)]
    </figure>
    <figure>
       <a href="https://cms.fnal.gov/lindsey-gray/">
@@ -58,7 +58,7 @@ This process significantly lowers technical barriers across tool development by 
       </a>
    .center[[Lindsey Gray](https://cms.fnal.gov/lindsey-gray/)
    Fermilab<br>
-   (CMS)]
+   (CMS, Scikit-HEP)]
    </figure>
    <figure>
       <a href="https://giordonstark.com/">
@@ -66,9 +66,11 @@ This process significantly lowers technical barriers across tool development by 
       </a>
    .center[[Giordon Stark](https://giordonstark.com/)
    UC Santa Cruz<br>
-   (ATLAS, IRIS-HEP)]
+   (ATLAS, IRIS-HEP,<br>Scikit-HEP)]
    </figure>
 </div>
+
+.bold.center[(everyone is welcome to join!)]
 
 ---
 # Quick setup for examples
@@ -516,6 +518,77 @@ pixi exec --spec rucio-mcp sh -c 'RUCIO_ACCOUNT=&lt;your username&gt; rucio-mcp 
 ]
 
 ---
+# (Possible?) DUNE questions / concerns
+
+.large[
+.bold.center[Can conda packages be built against development software?]
+
+* Yes, with [`pixi-build`](https://pixi.prefix.dev/v0.72.1/build/getting_started/) &mdash; a "preview" Pixi feature that has already reached maturity
+   - c.f. talk on Pixi + `pixi-build` by dev team at [SciPy 2026 on 2026-07-16](https://pretalx.com/scipy-2026/talk/MEKP9F/)
+* Allows for building and installing source distributions into conda packages.
+   - If a package repository has a Pixi manifest, it can build itself into a conda package for development
+* Allows for [defining dependencies against development software sources](https://pixi.prefix.dev/v0.72.1/build/package_source/)
+]
+.code-large[
+```toml
+[package]
+name = "tool-with-wire-cell-linkage-deps"
+...
+[package.host-dependencies]
+wire-cell-toolkit.git = "https://github.com/WireCell/wire-cell-toolkit.git"
+wire-cell-toolkit.rev = "61618538be4b6b2241d5be1e9abab6a3e0d4ad97"
+...
+```
+]
+
+---
+# (Possible?) DUNE questions / concerns
+
+.large[
+.bold.center[Doesn't having dev source recipes and conda-forge recipes duplicate work?]
+
+Yes and no (or, like all good question, "it depends")
+* `pixi-build`: "Recipes" for building .bold[development] software against .bold[development] software dependencies
+   - Uses minimal config and "build backends" to `rattler-build` recipe internally
+   - Can use a full `rattler-build` recipe if desired
+* conda-forge: `rattler-build` recipes for building .bold[released] software against .bold[released] software dependencies
+* Think less "duplication" and more "defining the motivation and scope of software distribution"
+* Counter to me: conda-forge feedstock maintainer might feel maintenance burden if not a core dev of software being released
+   - Counter-counter: The age of agentic tooling means that you're .bold[reviewing] a recipe change, not creating it
+]
+
+---
+# (Possible?) DUNE questions / concerns
+
+.large[
+.bold.center[We use Spack for a reason: performance at runtime]
+
+* Does .italic[every] use of your software warrant a .bold[runtime-machine-specific-from-source build]?
+* Has the performance gain from Spack compared to a platform-specific / [microarchitecture-optimized](https://conda-forge.org/docs/maintainer/knowledge_base/#microarch) package been benchmarked and quantified? How much is being gained?
+* Are you using [Spack binary mirrors](https://cache.spack.io/)? If so, how much of a tradeoff do you have there?
+   - Something like [Key4hep Spack + CVMFS approach](https://doi.org/10.1051/epjconf/202533701146)?
+   - Note that [Spack "splicing"](https://arxiv.org/abs/2509.07728) doesn't seem fully(?) mature yet
+* Answers might all be "yes"
+]
+---
+# (Possible?) DUNE questions / concerns
+
+.large[
+.bold.center[When would you not use conda-forge?]
+
+A hyper specific software distribution index: Recreating an LCG release for experiment physics stack
+
+1. Put all your software releases on conda-forge
+1. Construct the exact release configurations that you would like others to build from (the LCG collection) and create a Pixi lockfile for this
+1. Construct a .bold[private conda channel] from this lockfile that people can now install/build against
+   - A .bold[channel] of fully static, unambigious set of dependencies that are still conda packages
+1. Use [`pixi publish`](https://pixi.prefix.dev/v0.72.1/reference/cli/pixi/publish/) to build and publish sensitive packages to private distribution channel
+   <!-- - Either the first private conda channel or a new one -->
+1. To update bump any dependencies, use [`rattler-build rebuild`](https://rattler-build.prefix.dev/v0.68.0/rebuild/) to .bold[reproduce] the original build of an upstream dependency and apply patches to make a new frozen channel
+   - LCG terminology: LCG108 vs. LCG108a
+]
+
+---
 # Summary
 
 .larger[
@@ -567,7 +640,7 @@ class: end-slide, center
 * [HEP Packaging Coordination](https://hep-packaging-coordination.github.io/.github/)
 * .italic[[Packaging and Distributing the HEP Ecosystem on conda-forge](https://talks.chrisburr.me/2026-06-24-hsf-conda-forge/)], Chris Burr, Matthew Feickert, [June 2026 HSF Seminar](https://indico.cern.ch/event/1692605/contributions/7151271/)
 * .italic[[HEP Packaging Coordination: Distributing the HEP software ecosystem on conda-forge](https://matthewfeickert-talks.github.io/talk-chep-2026/)], Matthew Feickert, [CHEP 2026](https://indico.cern.ch/event/1471803/contributions/6966833/)
-* .italic[[Conda, Pixi and RattlerFS](https://talks.chrisburr.me/2026-06-22-pixi-and-rattlerfs/)], Chris Burr, June 2026 LHCb Week
+* .italic[[Conda, Pixi and RattlerFS](https://talks.chrisburr.me/2026-06-22-pixi-and-rattlerfs/)], Chris Burr, [June 2026 LHCb Week](https://indico.cern.ch/event/1696907/contributions/7143130/)
 ]
 
 ---

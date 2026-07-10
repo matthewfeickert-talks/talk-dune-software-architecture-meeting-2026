@@ -485,6 +485,13 @@ td {
     gap: var(--gap, 1em);
 }
 
+/* Top-align figures so images stay level when captions wrap to
+   different line counts (align-items: center would vertically offset
+   the taller figures). */
+.figure-row.align-top {
+    align-items: flex-start;
+}
+
 .figure-row > figure {
     margin: 0;
     text-align: center;
