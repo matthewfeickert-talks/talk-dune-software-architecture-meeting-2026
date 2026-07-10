@@ -519,6 +519,31 @@ pixi exec --spec rucio-mcp sh -c 'RUCIO_ACCOUNT=&lt;your username&gt; rucio-mcp 
 # (Possible?) DUNE questions / concerns
 
 .large[
+.bold.center[Can conda packages be built against development software?]
+
+* Yes, with [`pixi-build`](https://pixi.prefix.dev/v0.72.1/build/getting_started/) &mdash; a "preview" Pixi feature that has already reached maturity
+   - c.f. talk on Pixi + `pixi-build` by dev team at [SciPy 2026 on 2026-07-16](https://pretalx.com/scipy-2026/talk/MEKP9F/)
+* Allows for building and installing source distributions into conda packages.
+   - If a package repository has a Pixi manifest, it can build itself into a conda package for development
+* Allows for [defining dependencies against development software sources](https://pixi.prefix.dev/v0.72.1/build/package_source/)
+]
+.code-large[
+```toml
+[package]
+name = "tool-with-wire-cell-linkage-deps"
+...
+[package.host-dependencies]
+wire-cell-toolkit.git = "https://github.com/WireCell/wire-cell-toolkit.git"
+wire-cell-toolkit.rev = "61618538be4b6b2241d5be1e9abab6a3e0d4ad97"
+...
+```
+]
+
+
+---
+# (Possible?) DUNE questions / concerns
+
+.large[
 .bold.center[When would you not use conda-forge?]
 
 A hyper specific software distribution index: Recreating an LCG release for experiment physics stack
