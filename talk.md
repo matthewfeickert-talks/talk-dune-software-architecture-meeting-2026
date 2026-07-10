@@ -519,7 +519,18 @@ pixi exec --spec rucio-mcp sh -c 'RUCIO_ACCOUNT=&lt;your username&gt; rucio-mcp 
 # (Possible?) DUNE questions / concerns
 
 .large[
-.center[From discussions with DUNE members these might be valid existing questions.]
+.bold.center[When would you not use conda-forge?]
+
+A hyper specific software distribution index: Recreating an LCG release for experiment physics stack
+
+1. Put all your software releases on conda-forge
+1. Construct the exact release configurations that you would like others to build from (the LCG collection) and create a Pixi lockfile for this
+1. Construct a .bold[private conda channel] from this lockfile that people can now install/build against
+   - A .bold[channel] of fully static, unambigious set of dependencies that are still conda packages
+1. Use [`pixi publish`](https://pixi.prefix.dev/v0.72.1/reference/cli/pixi/publish/) to build and publish sensitive packages to private distribution channel
+   <!-- - Either the first private conda channel or a new one -->
+1. To update bump any dependencies, use [`rattler-build rebuild`](https://rattler-build.prefix.dev/v0.68.0/rebuild/) to .bold[reproduce] the original build of an upstream dependency and apply patches to make a new frozen channel
+   - LCG terminology: LCG108 vs. LCG108a
 ]
 
 ---
