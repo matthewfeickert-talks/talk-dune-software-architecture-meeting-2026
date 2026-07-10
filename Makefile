@@ -10,7 +10,7 @@ decktape: talk.md
 	docker run --rm -v ${dir_path}:/slides/ astefanutti/decktape:3.9.0 \
 	https://matthewfeickert-talks.github.io/${current_dir}/index.html \
 	talk.pdf
-	cp talk.pdf feickert_2026-05-27.pdf
+	cp talk.pdf feickert_2026-07-10.pdf
 
 decktape_local: talk.md
 	docker run --rm -t --net=host -v ${dir_path}:/slides astefanutti/decktape:3.9.0 \
