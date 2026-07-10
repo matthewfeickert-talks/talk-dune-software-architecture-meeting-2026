@@ -70,6 +70,8 @@ This process significantly lowers technical barriers across tool development by 
    </figure>
 </div>
 
+.bold.center[(everyone is welcome to join!)]
+
 ---
 # Quick setup for examples
 
